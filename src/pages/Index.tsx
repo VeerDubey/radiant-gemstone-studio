@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import CategoryCard from "@/components/CategoryCard";
 import heroWelcome from "@/assets/hero-welcome.jpg";
 import goldHero from "@/assets/gold-hero.jpg";
@@ -66,8 +64,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -149,8 +145,6 @@ const Index = () => {
           </div>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

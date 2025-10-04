@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import goldHero from "@/assets/gold-hero.jpg";
 
@@ -52,8 +50,6 @@ const Gold = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -97,8 +93,6 @@ const Gold = () => {
           ))}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

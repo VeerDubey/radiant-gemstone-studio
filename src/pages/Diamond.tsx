@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import diamondHero from "@/assets/diamond-hero.jpg";
 
@@ -52,8 +50,6 @@ const Diamond = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-blue-950 dark:via-gray-900 dark:to-blue-950">
         <div className="absolute inset-0">
@@ -98,8 +94,6 @@ const Diamond = () => {
           ))}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };

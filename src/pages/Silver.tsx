@@ -1,6 +1,4 @@
 import { motion } from "framer-motion";
-import Navbar from "@/components/Navbar";
-import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
 import silverHero from "@/assets/silver-hero.jpg";
 
@@ -52,8 +50,6 @@ const Silver = () => {
 
   return (
     <div className="min-h-screen">
-      <Navbar />
-
       {/* Hero Section */}
       <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         <div className="absolute inset-0">
@@ -97,8 +93,6 @@ const Silver = () => {
           ))}
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 };
