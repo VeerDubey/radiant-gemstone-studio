@@ -1,149 +1,213 @@
 import { motion } from "framer-motion";
-import CategoryCard from "@/components/CategoryCard";
+import { Link } from "react-router-dom";
 import heroWelcome from "@/assets/hero-welcome.jpg";
-import goldHero from "@/assets/gold-hero.jpg";
-import silverHero from "@/assets/silver-hero.jpg";
-import diamondHero from "@/assets/diamond-hero.jpg";
-import gemsHero from "@/assets/gems-hero.jpg";
-import { Sparkles, Award, Shield, Truck } from "lucide-react";
+import { Sparkles } from "lucide-react";
 
 const Index = () => {
   const categories = [
     {
-      title: "Gold Collection",
-      description: "Timeless luxury in pure gold craftsmanship",
-      image: goldHero,
+      title: "Gold",
+      emoji: "🟡",
+      description: "Rich Golden Luxury",
       link: "/gold",
       gradient: "luxury-gradient",
+      textColor: "text-white",
+      delay: 0.1,
     },
     {
-      title: "Silver Elegance",
-      description: "Modern sophistication in sterling silver",
-      image: silverHero,
+      title: "Silver",
+      emoji: "⚪",
+      description: "Elegant Silver Grace",
       link: "/silver",
       gradient: "silver-gradient",
+      textColor: "text-foreground",
+      delay: 0.2,
     },
     {
-      title: "Diamond Brilliance",
-      description: "Exquisite diamonds that capture forever",
-      image: diamondHero,
+      title: "Diamond",
+      emoji: "💎",
+      description: "Brilliant Diamond Radiance",
       link: "/diamond",
       gradient: "diamond-gradient",
+      textColor: "text-accent-foreground",
+      delay: 0.3,
     },
     {
-      title: "Precious Gems",
-      description: "Vibrant gemstones for every celebration",
-      image: gemsHero,
+      title: "Gems",
+      emoji: "🟣",
+      description: "Vibrant Precious Stones",
       link: "/gems",
       gradient: "gems-gradient",
-    },
-  ];
-
-  const features = [
-    {
-      icon: Award,
-      title: "Premium Quality",
-      description: "Certified authentic materials",
-    },
-    {
-      icon: Shield,
-      title: "Lifetime Warranty",
-      description: "Protected for generations",
-    },
-    {
-      icon: Truck,
-      title: "Free Shipping",
-      description: "Worldwide delivery",
-    },
-    {
-      icon: Sparkles,
-      title: "Expert Craftsmanship",
-      description: "Handcrafted perfection",
+      textColor: "text-white",
+      delay: 0.4,
     },
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen hero-gradient">
+      {/* Fullscreen Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background with overlay */}
         <div className="absolute inset-0">
           <img
             src={heroWelcome}
-            alt="Luxury Jewelry"
-            className="w-full h-full object-cover"
+            alt="Bhulaxmi Jewellers"
+            className="w-full h-full object-cover opacity-20"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/70 to-background/50" />
-        </div>
-
-        <div className="relative z-10 container mx-auto px-4 text-center md:text-left">
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-2xl"
-          >
-            <h1 className="text-5xl md:text-7xl font-serif font-bold mb-6 text-gradient-gold">
-              Timeless Elegance
-            </h1>
-            <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-              Discover our exquisite collection of handcrafted jewelry that celebrates
-              life's most precious moments
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="luxury-gradient text-white px-8 py-4 rounded-full font-semibold text-lg shadow-[var(--shadow-luxury)] hover:glow-gold transition-all duration-300"
-            >
-              Explore Collections
-            </motion.button>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Categories Section */}
-      <section className="container mx-auto px-4 py-20">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-12"
-        >
-          <h2 className="text-4xl md:text-5xl font-serif font-bold mb-4">
-            Our Collections
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Each piece tells a story of exceptional craftsmanship and timeless beauty
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {categories.map((category, index) => (
-            <CategoryCard key={category.title} {...category} index={index} />
-          ))}
-        </div>
-      </section>
-
-      {/* Features Section */}
-      <section className="bg-muted/30 py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
+          
+          {/* Animated sparkles */}
+          <div className="absolute inset-0">
+            {[...Array(20)].map((_, i) => (
               <motion.div
-                key={feature.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center"
+                key={i}
+                className="absolute"
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{
+                  opacity: [0, 1, 0],
+                  scale: [0, 1, 0],
+                  x: Math.random() * window.innerWidth,
+                  y: Math.random() * window.innerHeight,
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  delay: i * 0.2,
+                  repeatDelay: Math.random() * 2,
+                }}
               >
-                <div className="w-16 h-16 luxury-gradient rounded-full flex items-center justify-center mx-auto mb-4">
-                  <feature.icon className="h-8 w-8 text-white" />
-                </div>
-                <h3 className="font-serif font-semibold text-lg mb-2">{feature.title}</h3>
-                <p className="text-sm text-muted-foreground">{feature.description}</p>
+                <Sparkles className="text-primary/30" size={16} />
               </motion.div>
             ))}
           </div>
         </div>
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="max-w-5xl mx-auto"
+          >
+            {/* Main Title */}
+            <motion.h1
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-6xl md:text-8xl font-serif font-bold mb-4 text-gradient-gold"
+            >
+              Welcome to
+            </motion.h1>
+            
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="mb-6"
+            >
+              <h2 className="text-5xl md:text-7xl font-serif font-bold text-white mb-2 drop-shadow-lg">
+                Bhulaxmi Jewellers
+              </h2>
+              <div className="h-1 w-32 luxury-gradient mx-auto rounded-full" />
+            </motion.div>
+
+            {/* Subtitle */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              className="text-2xl md:text-3xl text-muted-foreground mb-16 font-light tracking-wide"
+            >
+              Select Your Treasure
+            </motion.p>
+
+            {/* Category Cards Grid */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+              {categories.map((category) => (
+                <motion.div
+                  key={category.title}
+                  initial={{ opacity: 0, y: 30, scale: 0.9 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  transition={{ duration: 0.5, delay: category.delay }}
+                >
+                  <Link to={category.link}>
+                    <motion.div
+                      whileHover={{ 
+                        scale: 1.05, 
+                        rotate: 1,
+                        y: -10,
+                      }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`${category.gradient} rounded-2xl p-8 shadow-2xl hover-tilt cursor-pointer group relative overflow-hidden`}
+                    >
+                      {/* Glow effect on hover */}
+                      <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-xl glow-gold" />
+                      
+                      <div className="relative z-10">
+                        {/* Emoji */}
+                        <motion.div
+                          animate={{ rotate: [0, -10, 10, -10, 0] }}
+                          transition={{ duration: 2, repeat: Infinity, delay: category.delay }}
+                          className="text-6xl mb-4"
+                        >
+                          {category.emoji}
+                        </motion.div>
+
+                        {/* Title */}
+                        <h3 className={`text-3xl font-serif font-bold mb-2 ${category.textColor}`}>
+                          {category.title}
+                        </h3>
+
+                        {/* Description */}
+                        <p className={`text-sm ${category.textColor} opacity-90 font-medium tracking-wide`}>
+                          {category.description}
+                        </p>
+
+                        {/* Hover indicator */}
+                        <motion.div
+                          initial={{ width: 0 }}
+                          whileHover={{ width: "100%" }}
+                          className={`h-1 ${category.textColor === 'text-white' ? 'bg-white' : 'bg-foreground'} mt-4 rounded-full transition-all duration-300`}
+                        />
+                      </div>
+                    </motion.div>
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+
+            {/* Bottom CTA */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.8, delay: 1 }}
+              className="mt-16 text-muted-foreground"
+            >
+              <p className="text-sm tracking-wider uppercase mb-2">Crafting Excellence Since 1990</p>
+              <div className="flex items-center justify-center gap-2">
+                <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+                <span className="text-xs">Trusted by Thousands</span>
+                <Sparkles className="h-4 w-4 text-primary animate-pulse" />
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Scroll indicator */}
+        <motion.div
+          animate={{ y: [0, 10, 0] }}
+          transition={{ duration: 2, repeat: Infinity }}
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        >
+          <div className="w-6 h-10 border-2 border-primary/30 rounded-full flex items-start justify-center p-2">
+            <motion.div
+              animate={{ y: [0, 12, 0] }}
+              transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1.5 h-1.5 bg-primary rounded-full"
+            />
+          </div>
+        </motion.div>
       </section>
     </div>
   );

@@ -1,99 +1,166 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import ProductCard from "@/components/ProductCard";
-import diamondHero from "@/assets/diamond-hero.jpg";
+import { getProductsByCategory } from "@/data/products";
+import { useState } from "react";
+import { Sparkles, Filter } from "lucide-react";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 const Diamond = () => {
-  const products = [
-    {
-      id: "1",
-      name: "Brilliant Cut Diamond Ring",
-      price: 8999,
-      image: diamondHero,
-      description: "1.5 carat diamond solitaire in platinum",
-    },
-    {
-      id: "2",
-      name: "Diamond Tennis Bracelet",
-      price: 12499,
-      image: diamondHero,
-      description: "Stunning line of brilliant diamonds",
-    },
-    {
-      id: "3",
-      name: "Diamond Stud Earrings",
-      price: 6799,
-      image: diamondHero,
-      description: "Classic 1 carat total weight studs",
-    },
-    {
-      id: "4",
-      name: "Diamond Pendant Necklace",
-      price: 5999,
-      image: diamondHero,
-      description: "Elegant halo diamond pendant",
-    },
-    {
-      id: "5",
-      name: "Three Stone Diamond Ring",
-      price: 11299,
-      image: diamondHero,
-      description: "Past, present, future trilogy design",
-    },
-    {
-      id: "6",
-      name: "Diamond Eternity Band",
-      price: 7899,
-      image: diamondHero,
-      description: "Full circle of brilliant diamonds",
-    },
-  ];
+  const allProducts = getProductsByCategory('diamond');
+  const [clarityFilter, setClarityFilter] = useState<string>('all');
+
+  const filteredProducts = clarityFilter === 'all'
+    ? allProducts
+    : allProducts.filter(p => p.clarity === clarityFilter);
+
+  const clarityOptions = ['IF', 'VVS1', 'VVS2', 'VS1', 'VS2'];
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-blue-950 dark:via-gray-900 dark:to-blue-950">
-        <div className="absolute inset-0">
-          <img
-            src={diamondHero}
-            alt="Diamond Collection"
-            className="w-full h-full object-cover opacity-70"
-          />
-          <div className="absolute inset-0 diamond-gradient opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-50 dark:from-blue-950 dark:via-gray-900 dark:to-blue-950 relative overflow-hidden">
+      {/* Sparkle animation overlay */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {[...Array(50)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            initial={{
+              x: Math.random() * window.innerWidth,
+              y: Math.random() * window.innerHeight,
+              scale: 0,
+              opacity: 0,
+            }}
+            animate={{
+              scale: [0, 1, 0],
+              opacity: [0, 1, 0],
+              rotate: [0, 180, 360],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              delay: Math.random() * 3,
+              repeatDelay: Math.random() * 2,
+            }}
+          >
+            <Sparkles className="text-blue-400/30" size={12} />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Hero Section with Glassmorphism */}
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 diamond-gradient opacity-50" />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/20 to-white dark:to-gray-900" />
 
         <div className="relative z-10 container mx-auto px-4 text-center">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="glow-diamond"
+            className="glassmorphism p-12 rounded-3xl shadow-2xl glow-diamond max-w-4xl mx-auto"
           >
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4 animate-shimmer bg-gradient-to-r from-accent-foreground via-white to-accent-foreground bg-[length:200%_100%] bg-clip-text text-transparent">
+            <motion.h1
+              animate={{
+                textShadow: [
+                  "0 0 20px rgba(59, 130, 246, 0.5)",
+                  "0 0 40px rgba(96, 165, 250, 0.8)",
+                  "0 0 20px rgba(59, 130, 246, 0.5)",
+                ],
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="text-6xl md:text-7xl font-serif font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-white to-blue-400 drop-shadow-lg"
+            >
               Diamond Collection
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Exquisite diamonds that capture forever
+            </motion.h1>
+            <p className="text-xl text-blue-900 dark:text-blue-100 max-w-2xl mx-auto font-light">
+              Brilliant Diamond Radiance — Forever Sparkles
             </p>
+            <motion.div
+              animate={{ scale: [1, 1.2, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="mt-6"
+            >
+              <Sparkles className="h-8 w-8 text-blue-500 mx-auto" />
+            </motion.div>
           </motion.div>
         </div>
       </section>
 
-      {/* Products Grid */}
-      <section className="container mx-auto px-4 py-16">
-        <div className="flex items-center justify-between mb-8">
-          <div>
-            <h2 className="text-3xl font-serif font-bold mb-2">Explore Diamond Jewelry</h2>
-            <p className="text-muted-foreground">{products.length} brilliant pieces</p>
+      {/* Filter Section */}
+      <section className="container mx-auto px-4 py-8">
+        <div className="glassmorphism p-6 rounded-2xl max-w-md">
+          <div className="flex items-center gap-3 mb-3">
+            <Filter className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+            <h3 className="font-semibold text-lg">Filter by Clarity</h3>
           </div>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product, index) => (
-            <ProductCard key={product.id} {...product} index={index} />
-          ))}
+          <Select value={clarityFilter} onValueChange={setClarityFilter}>
+            <SelectTrigger className="w-full glassmorphism border-blue-200 dark:border-blue-800">
+              <SelectValue placeholder="All Clarities" />
+            </SelectTrigger>
+            <SelectContent className="bg-white/95 dark:bg-gray-900/95 backdrop-blur-md">
+              <SelectItem value="all">All Clarities</SelectItem>
+              {clarityOptions.map(clarity => (
+                <SelectItem key={clarity} value={clarity}>
+                  {clarity} Clarity
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <p className="text-sm text-muted-foreground mt-2">
+            {filteredProducts.length} {filteredProducts.length === 1 ? 'diamond' : 'diamonds'} found
+          </p>
         </div>
       </section>
+
+      {/* Masonry Layout Products */}
+      <section className="container mx-auto px-4 pb-16">
+        <h2 className="text-3xl font-serif font-bold mb-8 text-center">
+          Brilliant Diamonds
+        </h2>
+        
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={clarityFilter}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6"
+          >
+            {filteredProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.4, delay: index * 0.1 }}
+                className="break-inside-avoid mb-6"
+              >
+                <div className="glassmorphism p-1 rounded-2xl glow-diamond">
+                  <ProductCard {...product} index={index} />
+                  {product.clarity && (
+                    <div className="px-4 pb-3 text-center">
+                      <span className="inline-block px-3 py-1 bg-blue-500/20 text-blue-700 dark:text-blue-300 text-xs font-semibold rounded-full">
+                        {product.clarity} Clarity
+                      </span>
+                    </div>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </section>
+
+      {/* Footer with Diamond Theme */}
+      <div className="border-t border-blue-200/50 dark:border-blue-800/50 glassmorphism py-8">
+        <div className="container mx-auto px-4 text-center text-blue-900 dark:text-blue-100">
+          <p className="text-sm">Certified diamonds • GIA graded • Ethically sourced</p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -47,16 +47,18 @@ All colors MUST be HSL.
     --radius: 0.75rem;
 
     /* Luxury Gradients */
-    --gradient-gold: linear-gradient(135deg, hsl(43, 74%, 49%) 0%, hsl(43, 90%, 65%) 100%);
-    --gradient-silver: linear-gradient(135deg, hsl(0, 0%, 75%) 0%, hsl(0, 0%, 90%) 100%);
-    --gradient-diamond: linear-gradient(135deg, hsl(210, 100%, 95%) 0%, hsl(200, 100%, 98%) 100%);
-    --gradient-gems: linear-gradient(135deg, hsl(280, 70%, 60%) 0%, hsl(320, 70%, 65%) 50%, hsl(40, 85%, 60%) 100%);
+    --gradient-gold: linear-gradient(135deg, hsl(43, 74%, 49%) 0%, hsl(35, 85%, 40%) 50%, hsl(43, 90%, 65%) 100%);
+    --gradient-silver: linear-gradient(135deg, hsl(0, 0%, 75%) 0%, hsl(210, 10%, 85%) 50%, hsl(0, 0%, 90%) 100%);
+    --gradient-diamond: linear-gradient(135deg, hsl(210, 100%, 98%) 0%, hsl(200, 90%, 95%) 50%, hsl(220, 100%, 98%) 100%);
+    --gradient-gems: linear-gradient(135deg, hsl(280, 70%, 60%) 0%, hsl(320, 70%, 65%) 25%, hsl(340, 80%, 60%) 50%, hsl(280, 75%, 70%) 75%, hsl(260, 70%, 65%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(25, 30%, 15%) 0%, hsl(35, 40%, 25%) 50%, hsl(25, 30%, 15%) 100%);
     
     /* Elegant Shadows */
     --shadow-luxury: 0 10px 40px -10px hsl(43 74% 49% / 0.3);
     --shadow-card: 0 4px 20px -4px hsl(25 15% 15% / 0.1);
-    --shadow-glow-gold: 0 0 30px hsl(43 90% 65% / 0.5);
-    --shadow-glow-diamond: 0 0 30px hsl(210 100% 95% / 0.6);
+    --shadow-glow-gold: 0 0 40px hsl(43 90% 65% / 0.6), 0 0 80px hsl(43 90% 65% / 0.3);
+    --shadow-glow-diamond: 0 0 40px hsl(210 100% 95% / 0.7), 0 0 80px hsl(200 100% 90% / 0.4);
+    --shadow-glow-gems: 0 0 40px hsl(280 70% 60% / 0.6), 0 0 80px hsl(320 70% 65% / 0.4);
     
     /* Premium Animations */
     --transition-luxury: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
@@ -133,6 +135,10 @@ All colors MUST be HSL.
     background: var(--gradient-gems);
   }
 
+  .hero-gradient {
+    background: var(--gradient-hero);
+  }
+
   .text-gradient-gold {
     @apply bg-gradient-to-r from-primary via-primary-glow to-primary bg-clip-text text-transparent;
   }
@@ -141,11 +147,49 @@ All colors MUST be HSL.
     @apply transition-all duration-300 hover:-translate-y-2 hover:shadow-[var(--shadow-luxury)];
   }
 
+  .hover-tilt {
+    @apply transition-all duration-300 hover:rotate-1 hover:scale-105;
+  }
+
   .glow-gold {
     box-shadow: var(--shadow-glow-gold);
   }
 
   .glow-diamond {
     box-shadow: var(--shadow-glow-diamond);
+  }
+
+  .glow-gems {
+    box-shadow: var(--shadow-glow-gems);
+  }
+
+  .glassmorphism {
+    @apply bg-white/10 backdrop-blur-md border border-white/20;
+  }
+
+  .sparkle {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .sparkle::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    animation: sparkle 3s infinite;
+  }
+
+  @keyframes sparkle {
+    0% { transform: translateX(-100%) translateY(-100%) rotate(0deg); }
+    100% { transform: translateX(100%) translateY(100%) rotate(360deg); }
   }
 }

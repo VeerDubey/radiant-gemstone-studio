@@ -1,12 +1,24 @@
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, User, Menu, X } from "lucide-react";
+import { ShoppingCart, User, Menu, X, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useWishlist } from "@/hooks/useWishlist";
 
 const Navbar = () => {
   const location = useLocation();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const wishlist = useWishlist();
+
+  // Dynamic navbar styling based on route
+  const navbarTheme = useMemo(() => {
+    const path = location.pathname;
+    if (path.includes('/gold')) return 'luxury-gradient text-white';
+    if (path.includes('/silver')) return 'silver-gradient text-foreground';
+    if (path.includes('/diamond')) return 'diamond-gradient text-accent-foreground';
+    if (path.includes('/gems')) return 'gems-gradient text-white';
+    return 'bg-card/95 backdrop-blur-md';
+  }, [location.pathname]);
 
   const navLinks = [
     { name: "Gold", path: "/gold" },
@@ -15,18 +27,20 @@ const Navbar = () => {
     { name: "Gems", path: "/gems" },
   ];
 
+
   return (
-    <nav className="sticky top-0 z-50 bg-card/95 backdrop-blur-md border-b border-border shadow-sm">
+    <nav className={`sticky top-0 z-50 border-b border-border/50 shadow-sm transition-all duration-500 ${navbarTheme}`}>
       <div className="container mx-auto px-4 py-4">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 group">
-            <div className="w-10 h-10 luxury-gradient rounded-full flex items-center justify-center group-hover:glow-gold transition-all duration-300">
-              <span className="text-white font-serif font-bold text-lg">L</span>
+          <Link to="/" className="flex items-center space-x-3 group">
+            <div className="w-12 h-12 luxury-gradient rounded-full flex items-center justify-center group-hover:glow-gold transition-all duration-300 shadow-lg">
+              <span className="text-white font-serif font-bold text-xl">BJ</span>
             </div>
-            <span className="text-2xl font-serif font-bold text-gradient-gold hidden sm:block">
-              Luxora
-            </span>
+            <div className="hidden sm:block">
+              <span className="text-xl font-serif font-bold block leading-tight">Bhulaxmi</span>
+              <span className="text-xs tracking-wider uppercase opacity-80">Jewellers</span>
+            </div>
           </Link>
 
           {/* Desktop Navigation */}
@@ -35,10 +49,10 @@ const Navbar = () => {
               <Link
                 key={link.path}
                 to={link.path}
-                className={`font-medium transition-all duration-300 relative group ${
+                className={`font-medium transition-all duration-300 relative group px-2 py-1 ${
                   location.pathname === link.path
-                    ? "text-primary"
-                    : "text-foreground hover:text-primary"
+                    ? "opacity-100 font-semibold"
+                    : "opacity-75 hover:opacity-100"
                 }`}
               >
                 {link.name}
@@ -54,11 +68,19 @@ const Navbar = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex items-center space-x-4">
-            <Button variant="ghost" size="icon" className="relative hover:text-primary">
+          <div className="flex items-center space-x-3">
+            <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform">
+              <Heart className="h-5 w-5" />
+              {wishlist.items.length > 0 && (
+                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
+                  {wishlist.items.length}
+                </span>
+              )}
+            </Button>
+            <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform">
               <User className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="relative hover:text-primary">
+            <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform">
               <ShoppingCart className="h-5 w-5" />
               <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
                 0

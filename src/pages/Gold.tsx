@@ -1,65 +1,51 @@
 import { motion } from "framer-motion";
 import ProductCard from "@/components/ProductCard";
-import goldHero from "@/assets/gold-hero.jpg";
+import { getProductsByCategory, getRandomProduct } from "@/data/products";
+import { useState, useEffect } from "react";
+import { Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const Gold = () => {
-  const products = [
-    {
-      id: "1",
-      name: "Eternal Gold Necklace",
-      price: 2499,
-      image: goldHero,
-      description: "18K gold chain with diamond pendant",
-    },
-    {
-      id: "2",
-      name: "Royal Gold Ring",
-      price: 1899,
-      image: goldHero,
-      description: "24K pure gold band with intricate design",
-    },
-    {
-      id: "3",
-      name: "Classic Gold Bracelet",
-      price: 3299,
-      image: goldHero,
-      description: "Elegant 18K gold link bracelet",
-    },
-    {
-      id: "4",
-      name: "Gold Stud Earrings",
-      price: 1299,
-      image: goldHero,
-      description: "22K gold earrings with traditional motifs",
-    },
-    {
-      id: "5",
-      name: "Heritage Gold Pendant",
-      price: 2799,
-      image: goldHero,
-      description: "Antique-inspired 18K gold pendant",
-    },
-    {
-      id: "6",
-      name: "Modern Gold Chain",
-      price: 1999,
-      image: goldHero,
-      description: "Contemporary 14K gold chain design",
-    },
-  ];
+  const products = getProductsByCategory('gold');
+  const [highlightedProduct, setHighlightedProduct] = useState<string | null>(null);
+
+  const highlightRandom = () => {
+    const randomProduct = getRandomProduct('gold');
+    if (randomProduct) {
+      setHighlightedProduct(randomProduct.id);
+      setTimeout(() => setHighlightedProduct(null), 3000);
+    }
+  };
 
   return (
-    <div className="min-h-screen">
-      {/* Hero Section */}
-      <section className="relative h-[50vh] min-h-[400px] flex items-center justify-center overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src={goldHero}
-            alt="Gold Collection"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 luxury-gradient opacity-40" />
-          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/50 to-transparent" />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-yellow-900/20 to-black">
+      {/* Hero Section with Golden Theme */}
+      <section className="relative h-[60vh] flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 luxury-gradient opacity-40" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-transparent to-black" />
+        
+        {/* Animated golden particles */}
+        <div className="absolute inset-0 overflow-hidden">
+          {[...Array(30)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-1 h-1 bg-primary rounded-full"
+              initial={{ 
+                x: Math.random() * window.innerWidth,
+                y: -20,
+                opacity: 0 
+              }}
+              animate={{
+                y: window.innerHeight + 20,
+                opacity: [0, 1, 0],
+              }}
+              transition={{
+                duration: Math.random() * 3 + 2,
+                repeat: Infinity,
+                delay: Math.random() * 2,
+              }}
+            />
+          ))}
         </div>
 
         <div className="relative z-10 container mx-auto px-4 text-center">
@@ -68,31 +54,70 @@ const Gold = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <h1 className="text-5xl md:text-6xl font-serif font-bold mb-4 text-white drop-shadow-lg">
+            <h1 className="text-6xl md:text-7xl font-serif font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-200 drop-shadow-lg">
               Gold Collection
             </h1>
-            <p className="text-xl text-white/90 max-w-2xl mx-auto">
-              Timeless luxury in pure gold craftsmanship
+            <p className="text-xl text-yellow-100/80 max-w-2xl mx-auto font-light tracking-wide">
+              Rich Golden Luxury — Timeless Treasures in Pure Gold
             </p>
+            
+            {/* Glowing border decoration */}
+            <motion.div
+              animate={{ 
+                boxShadow: [
+                  "0 0 20px rgba(251, 191, 36, 0.3)",
+                  "0 0 40px rgba(251, 191, 36, 0.6)",
+                  "0 0 20px rgba(251, 191, 36, 0.3)",
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+              className="w-32 h-1 luxury-gradient mx-auto mt-6 rounded-full"
+            />
           </motion.div>
         </div>
       </section>
 
-      {/* Products Grid */}
+      {/* Products Section */}
       <section className="container mx-auto px-4 py-16">
-        <div className="flex items-center justify-between mb-8">
+        <div className="flex flex-col md:flex-row items-center justify-between mb-8 gap-4">
           <div>
-            <h2 className="text-3xl font-serif font-bold mb-2">Explore Gold Jewelry</h2>
-            <p className="text-muted-foreground">{products.length} exquisite pieces</p>
+            <h2 className="text-3xl font-serif font-bold text-white mb-2">
+              Explore Our Gold Jewelry
+            </h2>
+            <p className="text-yellow-100/60">{products.length} exquisite pieces</p>
           </div>
+          
+          <Button
+            onClick={highlightRandom}
+            className="luxury-gradient hover:glow-gold transition-all duration-300 text-white font-semibold px-6 py-3 rounded-full shadow-xl"
+          >
+            <Sparkles className="mr-2 h-4 w-4" />
+            Highlight Random Product
+          </Button>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {products.map((product, index) => (
-            <ProductCard key={product.id} {...product} index={index} />
+            <motion.div
+              key={product.id}
+              className={`${
+                highlightedProduct === product.id
+                  ? "ring-4 ring-primary ring-offset-4 ring-offset-black rounded-2xl glow-gold"
+                  : ""
+              } transition-all duration-500`}
+            >
+              <ProductCard {...product} index={index} />
+            </motion.div>
           ))}
         </div>
       </section>
+
+      {/* Footer with Gold Theme */}
+      <div className="border-t border-primary/20 bg-gradient-to-r from-yellow-900/10 via-yellow-800/10 to-yellow-900/10 py-8">
+        <div className="container mx-auto px-4 text-center text-yellow-100/60">
+          <p className="text-sm">Crafted with precision • Certified authenticity • Lifetime warranty</p>
+        </div>
+      </div>
     </div>
   );
 };

@@ -8,14 +8,17 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
           {/* Brand */}
           <div>
-            <div className="flex items-center space-x-2 mb-4">
-              <div className="w-10 h-10 luxury-gradient rounded-full flex items-center justify-center">
-                <span className="text-white font-serif font-bold text-lg">L</span>
+            <div className="flex items-center space-x-3 mb-4">
+              <div className="w-12 h-12 luxury-gradient rounded-full flex items-center justify-center shadow-lg">
+                <span className="text-white font-serif font-bold text-xl">BJ</span>
               </div>
-              <span className="text-2xl font-serif font-bold text-gradient-gold">Luxora</span>
+              <div>
+                <span className="text-2xl font-serif font-bold block leading-tight">Bhulaxmi</span>
+                <span className="text-xs tracking-wider uppercase opacity-80">Jewellers</span>
+              </div>
             </div>
-            <p className="text-sm text-muted-foreground">
-              Timeless elegance in every piece. Crafting luxury jewelry since 1990.
+            <p className="text-sm text-muted-foreground max-w-xs">
+              Timeless elegance in every piece. Crafting luxury jewelry with tradition and trust since 1990.
             </p>
           </div>
 
@@ -82,7 +85,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-border pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; 2025 Luxora. All rights reserved.</p>
+          <p>&copy; 2025 Bhulaxmi Jewellers. All rights reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <span className="hover:text-primary cursor-pointer transition-colors">Privacy Policy</span>
             <span className="hover:text-primary cursor-pointer transition-colors">Terms of Service</span>

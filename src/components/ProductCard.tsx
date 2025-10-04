@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { Heart, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useWishlist } from "@/hooks/useWishlist";
+import { toast } from "sonner";
 
 interface ProductCardProps {
   id: string;
@@ -13,7 +14,18 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ id, name, price, image, description, index }: ProductCardProps) => {
-  const [isLiked, setIsLiked] = useState(false);
+  const wishlist = useWishlist();
+  const isLiked = wishlist.isInWishlist(id);
+
+  const toggleWishlist = () => {
+    if (isLiked) {
+      wishlist.removeFromWishlist(id);
+      toast.success('Removed from wishlist');
+    } else {
+      wishlist.addToWishlist(id);
+      toast.success('Added to wishlist ❤️');
+    }
+  };
 
   return (
     <motion.div
@@ -31,19 +43,18 @@ const ProductCard = ({ id, name, price, image, description, index }: ProductCard
         />
         
         {/* Wishlist Button */}
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            setIsLiked(!isLiked);
-          }}
-          className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white hover:scale-110"
+        <motion.button
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+          onClick={toggleWishlist}
+          className="absolute top-3 right-3 w-10 h-10 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center transition-all duration-300 hover:bg-white hover:shadow-lg z-10"
         >
           <Heart
             className={`h-5 w-5 transition-all duration-300 ${
               isLiked ? "fill-primary text-primary" : "text-foreground/60"
             }`}
           />
-        </button>
+        </motion.button>
       </div>
 
       {/* Content */}
