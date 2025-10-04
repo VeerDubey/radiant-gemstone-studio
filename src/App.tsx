@@ -9,8 +9,7 @@ import Silver from "./pages/Silver";
 import Diamond from "./pages/Diamond";
 import Gems from "./pages/Gems";
 import NotFound from "./pages/NotFound";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+import Layout from "./components/Layout";
 
 const queryClient = new QueryClient();
 
@@ -20,17 +19,17 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Navbar />
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/gold" element={<Gold />} />
-          <Route path="/silver" element={<Silver />} />
-          <Route path="/diamond" element={<Diamond />} />
-          <Route path="/gems" element={<Gems />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
+          <Route element={<Layout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/gold" element={<Gold />} />
+            <Route path="/silver" element={<Silver />} />
+            <Route path="/diamond" element={<Diamond />} />
+            <Route path="/gems" element={<Gems />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Route>
         </Routes>
-        <Footer />
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>
