@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import heroWelcome from "@/assets/hero-welcome.jpg";
 import { Sparkles } from "lucide-react";
+import { Testimonials } from "@/components/Testimonials";
+import { Newsletter } from "@/components/Newsletter";
 
 const Index = () => {
   const categories = [
@@ -209,6 +211,9 @@ const Index = () => {
           </div>
         </motion.div>
       </section>
+
+      <Testimonials />
+      <Newsletter />
     </div>
   );
 };

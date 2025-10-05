@@ -1,9 +1,10 @@
 import { Link, useLocation } from "react-router-dom";
-import { ShoppingCart, User, Menu, X, Heart } from "lucide-react";
+import { User, Menu, X, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWishlist } from "@/hooks/useWishlist";
+import { CartSheet } from "@/components/CartSheet";
 
 const Navbar = () => {
   const location = useLocation();
@@ -25,6 +26,8 @@ const Navbar = () => {
     { name: "Silver", path: "/silver" },
     { name: "Diamond", path: "/diamond" },
     { name: "Gems", path: "/gems" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
   ];
 
 
@@ -80,12 +83,7 @@ const Navbar = () => {
             <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform">
               <User className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform">
-              <ShoppingCart className="h-5 w-5" />
-              <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold">
-                0
-              </span>
-            </Button>
+            <CartSheet />
 
             {/* Mobile Menu Button */}
             <Button

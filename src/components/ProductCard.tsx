@@ -2,7 +2,9 @@ import { motion } from "framer-motion";
 import { Heart, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useWishlist } from "@/hooks/useWishlist";
+import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
+import { Link } from "react-router-dom";
 
 interface ProductCardProps {
   id: string;
@@ -15,6 +17,7 @@ interface ProductCardProps {
 
 const ProductCard = ({ id, name, price, image, description, index }: ProductCardProps) => {
   const wishlist = useWishlist();
+  const cart = useCart();
   const isLiked = wishlist.isInWishlist(id);
 
   const toggleWishlist = () => {
@@ -27,15 +30,28 @@ const ProductCard = ({ id, name, price, image, description, index }: ProductCard
     }
   };
 
+  const handleAddToCart = () => {
+    cart.addToCart({
+      id,
+      name,
+      price,
+      image,
+      category: 'general',
+    });
+    toast.success("Added to cart!", {
+      description: `${name} has been added to your cart.`,
+    });
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group relative bg-card rounded-xl overflow-hidden shadow-[var(--shadow-card)] hover-lift"
+      className="group relative bg-card rounded-xl overflow-hidden shadow-[var(--shadow-card)] hover-lift flex flex-col"
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden bg-muted">
+      <Link to={`/product/${id}`} className="relative aspect-square overflow-hidden bg-muted block">
         <img
           src={image}
           alt={name}
@@ -55,26 +71,36 @@ const ProductCard = ({ id, name, price, image, description, index }: ProductCard
             }`}
           />
         </motion.button>
-      </div>
+      </Link>
 
       {/* Content */}
-      <div className="p-5">
-        <h3 className="font-serif font-semibold text-lg mb-1 line-clamp-1 group-hover:text-primary transition-colors duration-300">
-          {name}
-        </h3>
+      <div className="p-5 flex-1 flex flex-col">
+        <Link to={`/product/${id}`}>
+          <h3 className="font-serif font-semibold text-lg mb-1 line-clamp-1 group-hover:text-primary transition-colors duration-300">
+            {name}
+          </h3>
+        </Link>
         <p className="text-sm text-muted-foreground mb-3 line-clamp-2">{description}</p>
         
-        <div className="flex items-center justify-between">
-          <span className="text-2xl font-serif font-bold text-primary">
-            ${price.toLocaleString()}
-          </span>
-          <Button
-            size="sm"
-            className="luxury-gradient text-white hover:glow-gold transition-all duration-300"
-          >
-            <ShoppingCart className="h-4 w-4 mr-2" />
-            Add
-          </Button>
+        <div className="mt-auto space-y-2">
+          <div className="flex items-center justify-between">
+            <span className="text-2xl font-serif font-bold text-primary">
+              ₹{price.toLocaleString()}
+            </span>
+          </div>
+          <div className="grid grid-cols-2 gap-2">
+            <Button variant="outline" size="sm" asChild>
+              <Link to={`/product/${id}`}>View</Link>
+            </Button>
+            <Button
+              size="sm"
+              onClick={handleAddToCart}
+              className="luxury-gradient text-white hover:glow-gold transition-all duration-300"
+            >
+              <ShoppingCart className="h-4 w-4 mr-1" />
+              Add
+            </Button>
+          </div>
         </div>
       </div>
     </motion.div>
