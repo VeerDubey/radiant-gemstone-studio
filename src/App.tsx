@@ -8,6 +8,7 @@ import Gold from "./pages/Gold";
 import Silver from "./pages/Silver";
 import Diamond from "./pages/Diamond";
 import Gems from "./pages/Gems";
+import Wishlist from "./pages/Wishlist";
 import ProductDetail from "./pages/ProductDetail";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
@@ -29,6 +30,7 @@ const App = () => (
             <Route path="/silver" element={<Silver />} />
             <Route path="/diamond" element={<Diamond />} />
             <Route path="/gems" element={<Gems />} />
+            <Route path="/wishlist" element={<Wishlist />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/about" element={<About />} />
             <Route path="/contact" element={<Contact />} />

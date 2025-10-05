@@ -4,11 +4,13 @@ import { Heart, ShoppingCart, ArrowLeft, Share2, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { getProductById } from "@/data/products";
+import { getProductById, getAllProducts } from "@/data/products";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useCart } from "@/hooks/useCart";
 import { toast } from "sonner";
 import { useState } from "react";
+import { CustomerReviews } from "@/components/CustomerReviews";
+import { RelatedProducts } from "@/components/RelatedProducts";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -196,6 +198,20 @@ const ProductDetail = () => {
               </p>
             </div>
           </motion.div>
+        </div>
+
+        {/* Customer Reviews */}
+        <div className="max-w-6xl mx-auto mt-12">
+          <CustomerReviews />
+        </div>
+
+        {/* Related Products */}
+        <div className="max-w-6xl mx-auto">
+          <RelatedProducts
+            currentProductId={product.id}
+            category={product.category}
+            products={getAllProducts()}
+          />
         </div>
       </div>
     </div>

@@ -1,13 +1,20 @@
 import { motion } from "framer-motion";
 import ProductCard from "@/components/ProductCard";
 import { getProductsByCategory, getRandomProduct } from "@/data/products";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FilterBar } from "@/components/FilterBar";
 
 const Gold = () => {
-  const products = getProductsByCategory('gold');
+  const allProducts = getProductsByCategory('gold');
+  const [filteredProducts, setFilteredProducts] = useState(allProducts);
   const [highlightedProduct, setHighlightedProduct] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("featured");
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 10000]);
+
+  const maxPrice = Math.max(...allProducts.map(p => p.price));
 
   const highlightRandom = () => {
     const randomProduct = getRandomProduct('gold');
@@ -15,6 +22,60 @@ const Gold = () => {
       setHighlightedProduct(randomProduct.id);
       setTimeout(() => setHighlightedProduct(null), 3000);
     }
+  };
+
+  // Filter and sort products
+  const handleFilterAndSort = () => {
+    let filtered = [...allProducts];
+
+    // Search filter
+    if (searchTerm) {
+      filtered = filtered.filter(p =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        p.description.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    // Price filter
+    filtered = filtered.filter(p => p.price >= priceRange[0] && p.price <= priceRange[1]);
+
+    // Sort
+    switch (sortBy) {
+      case 'price-low':
+        filtered.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-high':
+        filtered.sort((a, b) => b.price - a.price);
+        break;
+      case 'name':
+        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        break;
+      default:
+        filtered.sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
+    }
+
+    setFilteredProducts(filtered);
+  };
+
+  // Re-filter when dependencies change
+  useState(() => {
+    handleFilterAndSort();
+  });
+
+  // Update when filters change
+  const handleSearchChange = (value: string) => {
+    setSearchTerm(value);
+    setTimeout(handleFilterAndSort, 300);
+  };
+
+  const handleSortChange = (value: string) => {
+    setSortBy(value);
+    handleFilterAndSort();
+  };
+
+  const handlePriceRangeChange = (range: [number, number]) => {
+    setPriceRange(range);
+    handleFilterAndSort();
   };
 
   return (
@@ -84,7 +145,9 @@ const Gold = () => {
             <h2 className="text-3xl font-serif font-bold text-white mb-2">
               Explore Our Gold Jewelry
             </h2>
-            <p className="text-yellow-100/60">{products.length} exquisite pieces</p>
+            <p className="text-yellow-100/60">
+              {filteredProducts.length} of {allProducts.length} pieces
+            </p>
           </div>
           
           <Button
@@ -96,8 +159,17 @@ const Gold = () => {
           </Button>
         </div>
 
+        {/* Filter Bar */}
+        <FilterBar
+          onSearchChange={handleSearchChange}
+          onSortChange={handleSortChange}
+          onPriceRangeChange={handlePriceRangeChange}
+          priceRange={priceRange}
+          maxPrice={maxPrice}
+        />
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {products.map((product, index) => (
+          {filteredProducts.map((product, index) => (
             <motion.div
               key={product.id}
               className={`${

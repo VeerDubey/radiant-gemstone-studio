@@ -251,3 +251,7 @@ export const getRandomProduct = (category?: Product['category']) => {
   const pool = category ? getProductsByCategory(category) : products;
   return pool[Math.floor(Math.random() * pool.length)];
 };
+
+export const getAllProducts = () => {
+  return products;
+};

@@ -26,6 +26,7 @@ const Navbar = () => {
     { name: "Silver", path: "/silver" },
     { name: "Diamond", path: "/diamond" },
     { name: "Gems", path: "/gems" },
+    { name: "Wishlist", path: "/wishlist" },
     { name: "About", path: "/about" },
     { name: "Contact", path: "/contact" },
   ];
@@ -72,13 +73,15 @@ const Navbar = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
-            <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform">
-              <Heart className="h-5 w-5" />
-              {wishlist.items.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
-                  {wishlist.items.length}
-                </span>
-              )}
+            <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform" asChild>
+              <Link to="/wishlist">
+                <Heart className="h-5 w-5" />
+                {wishlist.items.length > 0 && (
+                  <span className="absolute -top-1 -right-1 bg-primary text-primary-foreground text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold animate-pulse">
+                    {wishlist.items.length}
+                  </span>
+                )}
+              </Link>
             </Button>
             <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform">
               <User className="h-5 w-5" />
