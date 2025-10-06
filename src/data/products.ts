@@ -5,6 +5,7 @@ export interface Product {
   image: string;
   description: string;
   category: 'gold' | 'silver' | 'diamond' | 'gems';
+  badge?: "new" | "sale" | "popular";
   featured?: boolean;
   clarity?: string;
   gemType?: string;
@@ -20,6 +21,7 @@ export const products: Product[] = [
     description: '22K gold necklace with traditional design',
     category: 'gold',
     featured: true,
+    badge: "popular",
   },
   {
     id: 'gold-2',
@@ -28,6 +30,7 @@ export const products: Product[] = [
     image: 'https://images.unsplash.com/photo-1611591437281-460bfbe1220a?w=800&q=80',
     description: 'Set of 4 elegant 18K gold bangles',
     category: 'gold',
+    badge: "new",
   },
   {
     id: 'gold-3',
@@ -126,6 +129,7 @@ export const products: Product[] = [
     category: 'diamond',
     clarity: 'VVS1',
     featured: true,
+    badge: "popular",
   },
   {
     id: 'diamond-2',

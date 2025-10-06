@@ -4,6 +4,9 @@ import heroWelcome from "@/assets/hero-welcome.jpg";
 import { Sparkles } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
 import { Newsletter } from "@/components/Newsletter";
+import { FeaturedSection } from "@/components/FeaturedSection";
+import { StatsSection } from "@/components/StatsSection";
+import { CategoryShowcase } from "@/components/CategoryShowcase";
 
 const Index = () => {
   const categories = [
@@ -212,6 +215,9 @@ const Index = () => {
         </motion.div>
       </section>
 
+      <FeaturedSection />
+      <StatsSection />
+      <CategoryShowcase />
       <Testimonials />
       <Newsletter />
     </div>

@@ -1,24 +1,29 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Heart, ShoppingCart, ArrowLeft, Share2, Star } from "lucide-react";
+import { Heart, ShoppingCart, ArrowLeft, Share2, Star, Plus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
 import { getProductById, getAllProducts } from "@/data/products";
 import { useWishlist } from "@/hooks/useWishlist";
 import { useCart } from "@/hooks/useCart";
+import { useCompare } from "@/components/CompareProducts";
 import { toast } from "sonner";
 import { useState } from "react";
 import { CustomerReviews } from "@/components/CustomerReviews";
 import { RelatedProducts } from "@/components/RelatedProducts";
+import { ImageZoom } from "@/components/ImageZoom";
+import { Breadcrumb } from "@/components/Breadcrumb";
 
 const ProductDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const wishlist = useWishlist();
   const cart = useCart();
+  const compare = useCompare();
   const product = id ? getProductById(id) : null;
   const [selectedImage, setSelectedImage] = useState(0);
+  const [quantity, setQuantity] = useState(1);
 
   if (!product) {
     return (
@@ -35,15 +40,17 @@ const ProductDetail = () => {
   const images = [product.image, product.image, product.image]; // Mock multiple images
 
   const handleAddToCart = () => {
-    cart.addToCart({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      image: product.image,
-      category: product.category,
-    });
+    for (let i = 0; i < quantity; i++) {
+      cart.addToCart({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: product.image,
+        category: product.category,
+      });
+    }
     toast.success("Added to cart!", {
-      description: `${product.name} has been added to your cart.`,
+      description: `${quantity} x ${product.name} added to your cart.`,
     });
   };
 
@@ -57,9 +64,18 @@ const ProductDetail = () => {
     }
   };
 
+  const handleAddToCompare = () => {
+    compare.addProduct(product);
+    toast.success("Added to compare!", {
+      description: `${product.name} added to comparison.`,
+    });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background/95 to-muted/20">
       <div className="container mx-auto px-4 py-8">
+        <Breadcrumb />
+        
         <Button
           variant="ghost"
           className="mb-6 gap-2"
@@ -78,6 +94,11 @@ const ProductDetail = () => {
           >
             <div className="sticky top-8">
               <div className="relative overflow-hidden rounded-2xl bg-card shadow-elegant mb-4">
+                <ImageZoom
+                  images={images}
+                  productName={product.name}
+                  selectedIndex={selectedImage}
+                />
                 <motion.img
                   key={selectedImage}
                   src={images[selectedImage]}
@@ -87,9 +108,11 @@ const ProductDetail = () => {
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
                 />
-                <Badge className="absolute top-4 right-4 luxury-gradient">
-                  {product.category}
-                </Badge>
+                {product.badge && (
+                  <Badge className="absolute top-4 right-4 luxury-gradient uppercase">
+                    {product.badge}
+                  </Badge>
+                )}
               </div>
               <div className="grid grid-cols-3 gap-4">
                 {images.map((img, index) => (
@@ -163,6 +186,28 @@ const ProductDetail = () => {
 
             <Separator />
 
+            {/* Quantity Selector */}
+            <div className="space-y-3">
+              <label className="text-sm font-medium">Quantity</label>
+              <div className="flex items-center gap-4">
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                >
+                  -
+                </Button>
+                <span className="text-xl font-semibold w-12 text-center">{quantity}</span>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity(quantity + 1)}
+                >
+                  <Plus className="h-4 w-4" />
+                </Button>
+              </div>
+            </div>
+
             <div className="space-y-3">
               <Button
                 size="lg"
@@ -170,9 +215,9 @@ const ProductDetail = () => {
                 onClick={handleAddToCart}
               >
                 <ShoppingCart className="h-5 w-5" />
-                Add to Cart
+                Add {quantity} to Cart - ₹{(product.price * quantity).toLocaleString()}
               </Button>
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-3 gap-3">
                 <Button
                   variant="outline"
                   size="lg"
@@ -182,11 +227,17 @@ const ProductDetail = () => {
                   <Heart
                     className={`h-5 w-5 ${isInWishlist ? "fill-primary text-primary" : ""}`}
                   />
-                  {isInWishlist ? "In Wishlist" : "Add to Wishlist"}
+                </Button>
+                <Button
+                  variant="outline"
+                  size="lg"
+                  className="gap-2"
+                  onClick={handleAddToCompare}
+                >
+                  Compare
                 </Button>
                 <Button variant="outline" size="lg" className="gap-2">
                   <Share2 className="h-5 w-5" />
-                  Share
                 </Button>
               </div>
             </div>

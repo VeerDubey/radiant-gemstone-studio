@@ -5,6 +5,7 @@ import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useWishlist } from "@/hooks/useWishlist";
 import { CartSheet } from "@/components/CartSheet";
+import { CompareSheet } from "@/components/CompareProducts";
 
 const Navbar = () => {
   const location = useLocation();
@@ -83,6 +84,7 @@ const Navbar = () => {
                 )}
               </Link>
             </Button>
+            <CompareSheet />
             <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform">
               <User className="h-5 w-5" />
             </Button>

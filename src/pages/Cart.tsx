@@ -4,18 +4,35 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import { Badge } from "@/components/ui/badge";
-import { ShoppingBag, Trash2, Plus, Minus, ArrowRight } from "lucide-react";
+import { Card } from "@/components/ui/card";
+import { ShoppingBag, Trash2, Plus, Minus, ArrowRight, Lock, Truck, RotateCcw } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Breadcrumb } from "@/components/Breadcrumb";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const Cart = () => {
   const cart = useCart();
   const items = cart.items;
+  const [promoCode, setPromoCode] = useState("");
+  const [discount, setDiscount] = useState(0);
+  
   const subtotal = cart.getTotalPrice();
-  const shipping = subtotal > 0 ? 500 : 0;
+  const shipping = subtotal > 0 ? (subtotal > 5000 ? 0 : 500) : 0;
   const tax = subtotal * 0.03;
-  const total = subtotal + shipping + tax;
+  const total = subtotal + shipping + tax - discount;
+
+  const handleApplyPromo = () => {
+    if (promoCode.toUpperCase() === "SAVE10") {
+      const discountAmount = subtotal * 0.1;
+      setDiscount(discountAmount);
+      toast.success("Promo code applied!", {
+        description: `You saved ₹${discountAmount.toLocaleString()}`,
+      });
+    } else {
+      toast.error("Invalid promo code");
+    }
+  };
 
   const handleCheckout = () => {
     toast.success("Proceeding to checkout...", {
@@ -137,12 +154,24 @@ const Cart = () => {
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Shipping</span>
-                    <span className="font-medium">₹{shipping.toLocaleString()}</span>
+                    <span className="font-medium">
+                      {shipping === 0 ? (
+                        <span className="text-green-600">FREE</span>
+                      ) : (
+                        `₹${shipping.toLocaleString()}`
+                      )}
+                    </span>
                   </div>
                   <div className="flex justify-between">
                     <span className="text-muted-foreground">Tax (3%)</span>
                     <span className="font-medium">₹{tax.toLocaleString()}</span>
                   </div>
+                  {discount > 0 && (
+                    <div className="flex justify-between text-green-600">
+                      <span>Discount</span>
+                      <span className="font-medium">-₹{discount.toLocaleString()}</span>
+                    </div>
+                  )}
                   
                   <Separator />
                   
@@ -155,10 +184,17 @@ const Cart = () => {
                 </div>
 
                 <div className="space-y-3 mb-6">
-                  <Input placeholder="Promo Code" />
-                  <Button variant="outline" className="w-full">
+                  <Input 
+                    placeholder="Enter Promo Code" 
+                    value={promoCode}
+                    onChange={(e) => setPromoCode(e.target.value)}
+                  />
+                  <Button variant="outline" className="w-full" onClick={handleApplyPromo}>
                     Apply Code
                   </Button>
+                  <p className="text-xs text-muted-foreground text-center">
+                    Try code: <span className="font-semibold">SAVE10</span> for 10% off
+                  </p>
                 </div>
 
                 <Button className="w-full gap-2 mb-3" size="lg" onClick={handleCheckout}>
@@ -170,14 +206,54 @@ const Cart = () => {
                   <Link to="/">Continue Shopping</Link>
                 </Button>
 
-                <div className="mt-6 pt-6 border-t border-border">
-                  <p className="text-xs text-muted-foreground text-center">
-                    Secure checkout powered by industry-standard encryption
-                  </p>
+                <div className="mt-6 pt-6 border-t border-border space-y-3">
+                  <div className="flex items-center gap-3 text-sm">
+                    <Lock className="h-4 w-4 text-green-600" />
+                    <span className="text-muted-foreground">Secure checkout</span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <Truck className="h-4 w-4 text-blue-600" />
+                    <span className="text-muted-foreground">
+                      {shipping === 0 ? "Free shipping on this order" : "Free shipping on orders over ₹5,000"}
+                    </span>
+                  </div>
+                  <div className="flex items-center gap-3 text-sm">
+                    <RotateCcw className="h-4 w-4 text-purple-600" />
+                    <span className="text-muted-foreground">30-day return policy</span>
+                  </div>
                 </div>
               </motion.div>
             </div>
           </div>
+
+          {/* Trust Badges */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+            className="mt-12"
+          >
+            <Card className="p-6">
+              <h3 className="font-serif text-lg font-bold mb-4 text-center">Why Buy From Us</h3>
+              <div className="grid md:grid-cols-3 gap-6 text-center">
+                <div>
+                  <Lock className="h-8 w-8 text-green-600 mx-auto mb-2" />
+                  <h4 className="font-semibold mb-1">Secure Payment</h4>
+                  <p className="text-sm text-muted-foreground">256-bit SSL encryption</p>
+                </div>
+                <div>
+                  <Truck className="h-8 w-8 text-blue-600 mx-auto mb-2" />
+                  <h4 className="font-semibold mb-1">Fast Delivery</h4>
+                  <p className="text-sm text-muted-foreground">Express shipping available</p>
+                </div>
+                <div>
+                  <RotateCcw className="h-8 w-8 text-purple-600 mx-auto mb-2" />
+                  <h4 className="font-semibold mb-1">Easy Returns</h4>
+                  <p className="text-muted-foreground text-sm">30-day money back</p>
+                </div>
+              </div>
+            </Card>
+          </motion.div>
         </div>
       </div>
     </div>
