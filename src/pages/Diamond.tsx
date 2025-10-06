@@ -1,8 +1,9 @@
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ProductCard from "@/components/ProductCard";
 import { getProductsByCategory } from "@/data/products";
-import { useState } from "react";
 import { Sparkles, Filter } from "lucide-react";
+import { FilterBar } from "@/components/FilterBar";
 import {
   Select,
   SelectContent,
@@ -12,8 +13,35 @@ import {
 } from "@/components/ui/select";
 
 const Diamond = () => {
-  const allProducts = getProductsByCategory('diamond');
+  const baseProducts = getProductsByCategory('diamond');
   const [clarityFilter, setClarityFilter] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("featured");
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000000]);
+
+  const maxPrice = useMemo(() => 
+    Math.max(...baseProducts.map(p => p.price)), 
+    [baseProducts]
+  );
+
+  const allProducts = useMemo(() => {
+    let filtered = baseProducts.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      product.price >= priceRange[0] &&
+      product.price <= priceRange[1]
+    );
+
+    switch (sortBy) {
+      case "price-low":
+        return filtered.sort((a, b) => a.price - b.price);
+      case "price-high":
+        return filtered.sort((a, b) => b.price - a.price);
+      case "name":
+        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+      default:
+        return filtered;
+    }
+  }, [baseProducts, searchTerm, sortBy, priceRange]);
 
   const filteredProducts = clarityFilter === 'all'
     ? allProducts
@@ -93,6 +121,14 @@ const Diamond = () => {
 
       {/* Filter Section */}
       <section className="container mx-auto px-4 py-8">
+        <FilterBar
+          onSearchChange={setSearchTerm}
+          onSortChange={setSortBy}
+          onPriceRangeChange={setPriceRange}
+          priceRange={priceRange}
+          maxPrice={maxPrice}
+        />
+        
         <div className="glassmorphism p-6 rounded-2xl max-w-md">
           <div className="flex items-center gap-3 mb-3">
             <Filter className="h-5 w-5 text-blue-600 dark:text-blue-400" />

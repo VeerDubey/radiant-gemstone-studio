@@ -1,13 +1,41 @@
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
 import ProductCard from "@/components/ProductCard";
 import { getProductsByCategory } from "@/data/products";
-import { useState } from "react";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { FilterBar } from "@/components/FilterBar";
 
 const Silver = () => {
-  const products = getProductsByCategory('silver');
+  const allProducts = getProductsByCategory('silver');
   const [scrollPosition, setScrollPosition] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("featured");
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500000]);
+
+  const maxPrice = useMemo(() => 
+    Math.max(...allProducts.map(p => p.price)), 
+    [allProducts]
+  );
+
+  const products = useMemo(() => {
+    let filtered = allProducts.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      product.price >= priceRange[0] &&
+      product.price <= priceRange[1]
+    );
+
+    switch (sortBy) {
+      case "price-low":
+        return filtered.sort((a, b) => a.price - b.price);
+      case "price-high":
+        return filtered.sort((a, b) => b.price - a.price);
+      case "name":
+        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+      default:
+        return filtered;
+    }
+  }, [allProducts, searchTerm, sortBy, priceRange]);
 
   const scroll = (direction: 'left' | 'right') => {
     const container = document.getElementById('horizontal-scroll');
@@ -47,6 +75,14 @@ const Silver = () => {
       {/* Horizontal Scrolling Product Cards */}
       <section className="py-16">
         <div className="container mx-auto px-4">
+          <FilterBar
+            onSearchChange={setSearchTerm}
+            onSortChange={setSortBy}
+            onPriceRangeChange={setPriceRange}
+            priceRange={priceRange}
+            maxPrice={maxPrice}
+          />
+          
           <div className="flex items-center justify-between mb-8">
             <h2 className="text-3xl font-serif font-bold">Featured Silver Pieces</h2>
             <div className="flex gap-2">

@@ -1,16 +1,44 @@
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import ProductCard from "@/components/ProductCard";
 import { getProductsByCategory, getRandomProduct, type Product } from "@/data/products";
-import { useState } from "react";
 import { Sparkles, Diamond } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { FilterBar } from "@/components/FilterBar";
 import { toast } from "sonner";
 
 const Gems = () => {
-  const products = getProductsByCategory('gems');
+  const allProducts = getProductsByCategory('gems');
   const [discoveredGem, setDiscoveredGem] = useState<Product | null>(null);
   const [isDiscovering, setIsDiscovering] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortBy, setSortBy] = useState("featured");
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 500000]);
+
+  const maxPrice = useMemo(() => 
+    Math.max(...allProducts.map(p => p.price)), 
+    [allProducts]
+  );
+
+  const products = useMemo(() => {
+    let filtered = allProducts.filter(product =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      product.price >= priceRange[0] &&
+      product.price <= priceRange[1]
+    );
+
+    switch (sortBy) {
+      case "price-low":
+        return filtered.sort((a, b) => a.price - b.price);
+      case "price-high":
+        return filtered.sort((a, b) => b.price - a.price);
+      case "name":
+        return filtered.sort((a, b) => a.name.localeCompare(b.name));
+      default:
+        return filtered;
+    }
+  }, [allProducts, searchTerm, sortBy, priceRange]);
 
   const discoverRandomGem = () => {
     setIsDiscovering(true);
@@ -177,6 +205,14 @@ const Gems = () => {
 
       {/* Circular Product Cards */}
       <section className="container mx-auto px-4 pb-16">
+        <FilterBar
+          onSearchChange={setSearchTerm}
+          onSortChange={setSortBy}
+          onPriceRangeChange={setPriceRange}
+          priceRange={priceRange}
+          maxPrice={maxPrice}
+        />
+        
         <h2 className="text-3xl font-serif font-bold text-white text-center mb-12">
           Our Gemstone Collection
         </h2>
