@@ -27,22 +27,22 @@ const Contact = () => {
     {
       icon: Phone,
       title: "Phone",
-      details: ["+91 98765 43210", "+91 98765 43211"],
+      details: ["9819072971"],
     },
     {
       icon: Mail,
       title: "Email",
-      details: ["info@bhulaxmi.com", "support@bhulaxmi.com"],
+      details: ["Bhulaxmi916@gmail.com"],
     },
     {
       icon: MapPin,
       title: "Address",
-      details: ["123 Jewelry Street", "Mumbai, Maharashtra 400001"],
+      details: ["Shop no 3/4/5 Roopji Castle Building", "Parel Bhoiwada, Mumbai - 12"],
     },
     {
       icon: Clock,
-      title: "Business Hours",
-      details: ["Mon - Sat: 10:00 AM - 8:00 PM", "Sunday: 11:00 AM - 6:00 PM"],
+      title: "Since",
+      details: ["Serving Mumbai since 1997", "Trusted name in fine jewelry"],
     },
   ];
 

@@ -199,7 +199,7 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 1 }}
               className="mt-16 text-muted-foreground"
             >
-              <p className="text-sm tracking-wider uppercase mb-2">Crafting Excellence Since 1990</p>
+              <p className="text-sm tracking-wider uppercase mb-2">Crafting Excellence Since 1997</p>
               <div className="flex items-center justify-center gap-2">
                 <Sparkles className="h-4 w-4 text-primary animate-pulse" />
                 <span className="text-xs">Trusted by Thousands</span>

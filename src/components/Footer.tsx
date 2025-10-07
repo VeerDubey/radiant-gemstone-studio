@@ -17,9 +17,19 @@ const Footer = () => {
                 <span className="text-xs tracking-wider uppercase opacity-80">Jewellers</span>
               </div>
             </div>
-            <p className="text-sm text-muted-foreground max-w-xs">
-              Timeless elegance in every piece. Crafting luxury jewelry with tradition and trust since 1990.
+            <p className="text-sm text-muted-foreground max-w-xs mb-3">
+              Timeless elegance in every piece. Crafting luxury jewelry with tradition and trust since 1997.
             </p>
+            <div className="space-y-1 text-xs text-muted-foreground">
+              <p className="flex items-center gap-2">
+                <Mail className="h-3 w-3" />
+                Bhulaxmi916@gmail.com
+              </p>
+              <p className="flex items-center gap-2">
+                <span className="h-3 w-3 flex items-center justify-center">📞</span>
+                9819072971
+              </p>
+            </div>
           </div>
 
           {/* Quick Links */}
