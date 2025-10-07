@@ -10,6 +10,7 @@ import { StatsSection } from "@/components/StatsSection";
 import { CategoryShowcase } from "@/components/CategoryShowcase";
 
 const Index = () => {
+  // Main homepage component
   const categories = [
     {
       title: "Gold",
