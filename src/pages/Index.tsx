@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet";
 import heroWelcome from "@/assets/hero-welcome.jpg";
 import { Sparkles } from "lucide-react";
 import { Testimonials } from "@/components/Testimonials";
@@ -49,8 +50,16 @@ const Index = () => {
   ];
 
   return (
-    <div className="min-h-screen hero-gradient">
-      {/* Fullscreen Hero Section */}
+    <>
+      <Helmet>
+        <title>Bhulaxmi Jewellers - Luxury Gold, Diamond, Silver & Gems Jewelry</title>
+        <meta name="description" content="Discover exquisite handcrafted luxury jewelry at Bhulaxmi Jewellers. Shop certified gold, diamond, silver jewelry and precious gems. Trusted since 1990. Free shipping on orders over ₹50,000." />
+        <meta name="keywords" content="gold jewelry India, diamond rings, silver jewelry, precious gems, luxury jewelry online, certified gold, wedding jewelry, engagement rings, Bhulaxmi Jewellers" />
+        <link rel="canonical" href="https://yoursite.com/" />
+      </Helmet>
+      
+      <div className="min-h-screen hero-gradient">
+        {/* Fullscreen Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
         {/* Background with overlay */}
         <div className="absolute inset-0">
@@ -215,12 +224,13 @@ const Index = () => {
         </motion.div>
       </section>
 
-      <FeaturedSection />
-      <StatsSection />
-      <CategoryShowcase />
-      <Testimonials />
-      <Newsletter />
-    </div>
+        <FeaturedSection />
+        <StatsSection />
+        <CategoryShowcase />
+        <Testimonials />
+        <Newsletter />
+      </div>
+    </>
   );
 };
 
