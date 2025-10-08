@@ -6,6 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useWishlist } from "@/hooks/useWishlist";
 import { CartSheet } from "@/components/CartSheet";
 import { CompareSheet } from "@/components/CompareProducts";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 const Navbar = () => {
   const location = useLocation();
@@ -74,6 +75,7 @@ const Navbar = () => {
 
           {/* Actions */}
           <div className="flex items-center space-x-3">
+            <ThemeToggle />
             <Button variant="ghost" size="icon" className="relative hover:scale-110 transition-transform" asChild>
               <Link to="/wishlist">
                 <Heart className="h-5 w-5" />
