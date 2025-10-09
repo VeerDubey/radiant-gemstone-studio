@@ -12,7 +12,7 @@ serve(async (req) => {
   }
 
   try {
-    const { productId, category } = await req.json();
+    const { type, productId, category, message, conversationHistory } = await req.json();
 
     const supabaseUrl = Deno.env.get('SUPABASE_URL')!;
     const supabaseKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY')!;

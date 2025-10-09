@@ -20,7 +20,11 @@ export const AIRecommendations = ({ currentProductId, category }: { currentProdu
     const fetchRecommendations = async () => {
       try {
         const { data, error } = await supabase.functions.invoke('ai-recommendations', {
-          body: { productId: currentProductId, category }
+          body: { 
+            type: 'recommend',
+            productId: currentProductId, 
+            category 
+          }
         });
 
         if (!error && data?.recommendations) {

@@ -14,6 +14,10 @@ import { CustomerReviews } from "@/components/CustomerReviews";
 import { RelatedProducts } from "@/components/RelatedProducts";
 import { ImageZoom } from "@/components/ImageZoom";
 import { Breadcrumb } from "@/components/Breadcrumb";
+import { Product3DViewer } from "@/components/Product3DViewer";
+import { CustomDesignStudio } from "@/components/CustomDesignStudio";
+import { VirtualTryOn } from "@/components/VirtualTryOn";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const ProductDetail = () => {
   const { id } = useParams();
@@ -251,13 +255,45 @@ const ProductDetail = () => {
           </motion.div>
         </div>
 
-        {/* Customer Reviews */}
+        {/* Advanced Features Tabs */}
         <div className="max-w-6xl mx-auto mt-12">
-          <CustomerReviews />
+          <Tabs defaultValue="3d" className="w-full">
+            <TabsList className="grid w-full grid-cols-4">
+              <TabsTrigger value="3d">3D View</TabsTrigger>
+              <TabsTrigger value="tryon">Virtual Try-On</TabsTrigger>
+              <TabsTrigger value="custom">Custom Design</TabsTrigger>
+              <TabsTrigger value="reviews">Reviews</TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="3d" className="mt-6">
+              <Product3DViewer productName={product.name} />
+            </TabsContent>
+            
+            <TabsContent value="tryon" className="mt-6">
+              <VirtualTryOn 
+                productImage={product.image}
+                productName={product.name}
+              />
+            </TabsContent>
+            
+            <TabsContent value="custom" className="mt-6">
+              <CustomDesignStudio 
+                baseProduct={{
+                  id: product.id,
+                  name: product.name,
+                  category: product.category
+                }}
+              />
+            </TabsContent>
+            
+            <TabsContent value="reviews" className="mt-6">
+              <CustomerReviews />
+            </TabsContent>
+          </Tabs>
         </div>
 
         {/* Related Products */}
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-6xl mx-auto mt-12">
           <RelatedProducts
             currentProductId={product.id}
             category={product.category}
