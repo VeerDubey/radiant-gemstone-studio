@@ -53,7 +53,7 @@ const Index = () => {
   return (
     <>
       <Helmet>
-        <title>Bhulaxmi Jewellers - Luxury Gold, Diamond, Silver & Gems Jewelry</title>
+        <title>Bhulaxmi Jewellers Pvt Ltd - Luxury Gold, Diamond, Silver & Gems Jewelry</title>
         <meta name="description" content="Discover exquisite handcrafted luxury jewelry at Bhulaxmi Jewellers. Shop certified gold, diamond, silver jewelry and precious gems. Trusted since 1990. Free shipping on orders over ₹50,000." />
         <meta name="keywords" content="gold jewelry India, diamond rings, silver jewelry, precious gems, luxury jewelry online, certified gold, wedding jewelry, engagement rings, Bhulaxmi Jewellers" />
         <link rel="canonical" href="https://yoursite.com/" />
@@ -66,7 +66,7 @@ const Index = () => {
         <div className="absolute inset-0">
           <img
             src={heroWelcome}
-            alt="Bhulaxmi Jewellers"
+            alt="Bhulaxmi Jewellers Pvt Ltd"
             className="w-full h-full object-cover opacity-20"
           />
           <div className="absolute inset-0 bg-gradient-to-b from-transparent via-background/50 to-background" />
@@ -209,7 +209,7 @@ const Index = () => {
           </motion.div>
         </div>
 
-        {/* Scroll indicator */}
+
         <motion.div
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
