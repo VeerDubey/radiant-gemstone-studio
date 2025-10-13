@@ -95,7 +95,7 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="border-t border-border pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-muted-foreground">
-          <p>&copy; 2025 Bhulaxmi Jewellers. All rights reserved.</p>
+          <p>&copy; 2025 Bhulaxmi Jewellers Pvt Ltd. All rights reserved.</p>
           <div className="flex gap-6 mt-4 md:mt-0">
             <span className="hover:text-primary cursor-pointer transition-colors">Privacy Policy</span>
             <span className="hover:text-primary cursor-pointer transition-colors">Terms of Service</span>

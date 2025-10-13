@@ -122,7 +122,7 @@ const Index = () => {
               className="mb-6"
             >
               <h2 className="text-5xl md:text-7xl font-serif font-bold text-white mb-2 drop-shadow-lg">
-                Bhulaxmi Jewellers
+                Bhulaxmi Jewellers Pvt 
               </h2>
               <div className="h-1 w-32 luxury-gradient mx-auto rounded-full" />
             </motion.div>
