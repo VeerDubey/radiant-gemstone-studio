@@ -14,7 +14,7 @@ const Footer = () => {
               </div>
               <div>
                 <span className="text-2xl font-serif font-bold block leading-tight">Bhulaxmi</span>
-                <span className="text-xs tracking-wider uppercase opacity-80">Jewellers</span>
+                <span className="text-xs tracking-wider uppercase opacity-80">Jewellers Pvt Ltd</span>
               </div>
             </div>
             <p className="text-sm text-muted-foreground max-w-xs mb-3">
