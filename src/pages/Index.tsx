@@ -54,8 +54,8 @@ const Index = () => {
     <>
       <Helmet>
         <title>Bhulaxmi Jewellers Pvt Ltd - Luxury Gold, Diamond, Silver & Gems Jewelry</title>
-        <meta name="description" content="Discover exquisite handcrafted luxury jewelry at Bhulaxmi Jewellers. Shop certified gold, diamond, silver jewelry and precious gems. Trusted since 1990. Free shipping on orders over ₹50,000." />
-        <meta name="keywords" content="gold jewelry India, diamond rings, silver jewelry, precious gems, luxury jewelry online, certified gold, wedding jewelry, engagement rings, Bhulaxmi Jewellers" />
+        <meta name="description" content="Discover exquisite handcrafted luxury jewelry at Bhulaxmi Jewellers Pvt Ltd. Shop certified gold, diamond, silver jewelry and precious gems. Trusted since 1990. Free shipping on orders over ₹50,000." />
+        <meta name="keywords" content="gold jewelry India, diamond rings, silver jewelry, precious gems, luxury jewelry online, certified gold, wedding jewelry, engagement rings, Bhulaxmi Jewellers Pvt Ltd" />
         <link rel="canonical" href="https://yoursite.com/" />
       </Helmet>
       
